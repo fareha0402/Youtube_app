@@ -5,7 +5,7 @@ import MainContainer from "./components/MainContainer";
 import Sidebar from "./components/Sidebar";
 import appStore from "./store/appStore";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import Watch from "./components/watch";
+import Watch from "./components/Watch";
 import Body from "./components/Body";
 
 function App() {
