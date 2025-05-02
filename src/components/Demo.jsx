@@ -1,12 +1,31 @@
-// useMemo - is used to cache the results of a calculation between the re renders
+import { useEffect, useState } from 'react'
 
-// if the operation is expensive then it will re render the things
-// eg: find nth prime number
+const Debounce_search = () => {
+    const [searchQuery,setSearchQuery] = useState('')
+    const [searchResults,setSearchResults] = useState('')
+    
+    useEffect(() =>{
+        // API call to be made
+        const clear = setTimeout(() => {
+        // call API and set the results
+        debounce()
+        },2000)
+        
+        return () => { clearTimeout(clear)}
+    },[searchQuery])
 
-const Demo = () =>{
-    return(
-        <></>
-    )
+    const debounce = () =>{
+            // fetch() with the query
+            // let response = fetch('teste',)
+            setSearchResults('Testing')
+        }
+  return (
+    <>
+    <div>Debounce_search</div>
+    <input className='m-4 p-2 border border-black' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}></input>
+    <p>Searching for ... {searchResults}</p>
+    </>
+  )
 }
 
-export default Demo
+export default Debounce_search

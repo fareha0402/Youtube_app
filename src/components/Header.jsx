@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   MENU_LOGO,
   USER_LOGO,
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../store/appSlice";
 import { useNavigate } from "react-router";
 import { cacheResults } from "../store/searchSlice";
+import { ThemeContext } from "../utils/context/ToggleThemeContext";
 
 const Header = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -16,6 +17,7 @@ const Header = () => {
   const [showSuggestionPanel, setShowSuggestionPanel] = useState(false);
   const searchCache = useSelector(store => store.search)
 
+  const {darkMode,toggleMode} = useContext(ThemeContext)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSideBar = () => {
@@ -54,7 +56,7 @@ const Header = () => {
     };
   }, [searchInput]);
   return (
-    <>
+    <div className={darkMode? 'bg-black text-white': 'bg-white text-black'}>
       <div className="grid grid-flow-col shadow-lg">
         <div className="flex col-span-2 ml-5">
           <img
@@ -90,8 +92,11 @@ const Header = () => {
         <div className="col-span-3 ml-50">
           <img alt="user" src={USER_LOGO} className="w-12 m-3 cursor-pointer" />
         </div>
+        <div className={darkMode ? 'bg-black' : 'bg-white'}>
+        <button className="p-2 m-2 bg-amber-200 text-black" onClick={toggleMode}>{darkMode? 'Dark' :'light' }</button>
+    </div>
       </div>
-      {showSuggestionPanel && suggestions.length &&<div className="bg-white absolute z-20 top-12 left-2/12 p-2 m-2 shadow-lg w-120 h-screen rounded-xl border-gray-50">
+      {showSuggestionPanel && suggestions.length &&<div className="bg-white text-black absolute z-20 top-12 left-2/12 p-2 m-2 shadow-lg w-120 h-screen rounded-xl border-gray-50">
         <ul>
           {suggestions.map((result) => (
             <li className="p-1 m-2 text-lg hover:bg-gray-100 flex" key={result}>
@@ -104,7 +109,7 @@ const Header = () => {
           ))}
         </ul>
       </div>}
-    </>
+    </div>
   );
 };
 
